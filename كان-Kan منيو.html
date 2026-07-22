@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>كان | Kan Café — المنيو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6EEDF;
+    --cream-2:#EFE4CE;
+    --maroon-deep:#4A1420;
+    --maroon:#6E1F2B;
+    --maroon-light:#8B2C3A;
+    --gold:#C79A3D;
+    --gold-light:#E7C878;
+    --ink:#2B1710;
+    --ink-soft:#6E5142;
+    --radius:14px;
+    --shadow:0 8px 24px rgba(74,20,32,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Tajawal',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:40px;
+  }
+  ::selection{background:var(--gold-light);}
+
+  /* ---------- Ornamental pattern (signature element) ---------- */
+  .scallop-strip{
+    height:16px;
+    width:100%;
+    background:
+      radial-gradient(circle at 10px 0, transparent 9px, var(--maroon-deep) 9.5px) 0 -8px/20px 16px repeat-x;
+  }
+  .scallop-strip.flip{ transform:scaleY(-1); }
+  .star-divider{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin:18px 0; opacity:0.85;
+  }
+  .star-divider::before,.star-divider::after{
+    content:""; flex:1; height:1px; background:linear-gradient(to var(--dir,left), transparent, var(--gold), transparent);
+  }
+  .star-divider svg{ width:16px; height:16px; flex:none; fill:var(--gold); }
+
+  /* ---------- Header ---------- */
+  header.hero{
+    background:linear-gradient(180deg,var(--maroon-deep),var(--maroon) 60%, var(--maroon-light));
+    color:var(--cream);
+    text-align:center;
+    padding:34px 20px 26px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(199,154,61,0.15) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(199,154,61,0.12) 0, transparent 45%);
+    pointer-events:none;
+  }
+  .brand-mark{
+    font-family:'Aref Ruqaa', serif;
+    font-size:2.6rem;
+    font-weight:700;
+    letter-spacing:2px;
+    color:var(--gold-light);
+    margin:6px 0 2px;
+    text-shadow:0 2px 10px rgba(0,0,0,0.25);
+  }
+  .brand-sub{
+    font-family:'Aref Ruqaa', serif;
+    letter-spacing:6px;
+    font-size:0.8rem;
+    color:var(--cream-2);
+    text-transform:uppercase;
+    opacity:0.85;
+  }
+  .brand-tag{
+    margin-top:10px;
+    font-size:0.92rem;
+    color:var(--gold-light);
+    font-weight:500;
+  }
+
+  /* ---------- Sticky nav tabs ---------- */
+  nav.tabs{
+    position:sticky; top:0; z-index:50;
+    background:var(--maroon-deep);
+    display:flex;
+    overflow-x:auto;
+    scrollbar-width:none;
+    box-shadow:var(--shadow);
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    flex:1 0 auto;
+    min-width:25%;
+    background:none;
+    border:none;
+    color:var(--cream-2);
+    font-family:'Tajawal',sans-serif;
+    font-weight:700;
+    font-size:0.95rem;
+    padding:14px 10px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    transition:all .2s ease;
+    white-space:nowrap;
+  }
+  nav.tabs button .ico{ display:block; font-size:1.15rem; margin-bottom:2px;}
+  nav.tabs button.active{
+    color:var(--gold-light);
+    border-bottom-color:var(--gold);
+    background:rgba(199,154,61,0.08);
+  }
+
+  main{ max-width:1100px; margin:0 auto; padding:22px 16px 10px; }
+
+  .panel{ display:none; animation:fadeIn .35s ease; }
+  .panel.active{ display:block; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .panel-intro{
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    margin-bottom:6px;
+  }
+
+  .category-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+    margin-top:14px;
+  }
+  @media (min-width:640px){
+    .category-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (min-width:1024px){
+    .category-grid{ grid-template-columns:1fr 1fr 1fr; }
+  }
+
+  .category-card{
+    background:#fff;
+    border:1px solid rgba(74,20,32,0.08);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px 18px 10px;
+  }
+  .category-title{
+    font-family:'Aref Ruqaa', serif;
+    color:var(--maroon);
+    font-size:1.3rem;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin:0 0 10px;
+    border-bottom:2px solid var(--gold-light);
+    padding-bottom:8px;
+  }
+  .category-title .emoji{ font-size:1.1rem; }
+
+  .menu-row{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding:7px 0;
+    font-size:0.98rem;
+  }
+  .menu-row + .menu-row{ border-top:1px dashed rgba(110,81,66,0.2); }
+  .item-name{ color:var(--ink); font-weight:500; white-space:nowrap; }
+  .leader{ flex:1; border-bottom:2px dotted rgba(199,154,61,0.55); margin-bottom:5px; }
+  .price{
+    font-weight:900;
+    color:var(--maroon);
+    white-space:nowrap;
+    min-width:34px;
+    text-align:left;
+    direction:ltr;
+    display:inline-block;
+  }
+  .price::after{ content:" ج"; font-weight:500; font-size:0.72em; color:var(--ink-soft); }
+  .price-dual{ display:flex; gap:10px; }
+  .price-dual span{ font-size:0.72rem; color:var(--ink-soft); font-weight:700; }
+
+  .note-box{
+    background:var(--cream-2);
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    margin-top:10px;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 16px 10px;
+    color:var(--ink-soft);
+    font-size:0.85rem;
+  }
+  footer .foot-brand{
+    font-family:'Aref Ruqaa', serif;
+    color:var(--maroon);
+    font-size:1.3rem;
+    margin-bottom:6px;
+  }
+  footer a{ color:var(--maroon); font-weight:700; text-decoration:none; }
+  footer .wa-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:#25D366; color:#fff; font-weight:700;
+    padding:10px 20px; border-radius:30px; margin-top:10px;
+    box-shadow:0 6px 16px rgba(37,211,102,0.35);
+  }
+
+  @media (min-width:640px){
+    .brand-mark{ font-size:3.2rem; }
+    nav.tabs button{ font-size:1.05rem; padding:16px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="brand-sub">COFFEE &amp; DESSERT</div>
+  <div class="brand-mark">كان | KAN</div>
+  <div class="brand-tag">☕ المنيو الكامل — قهوة، مشروبات، وحلويات</div>
+</header>
+<div class="scallop-strip"></div>
+
+<nav class="tabs" id="tabs">
+  <button class="active" data-tab="hot"><span class="ico">🔥</span>ساخنة</button>
+  <button data-tab="cold"><span class="ico">🧊</span>ساقعة</button>
+  <button data-tab="dessert"><span class="ico">🍰</span>ديزرت</button>
+  <button data-tab="extra"><span class="ico">➕</span>إضافات</button>
+</nav>
+
+<main>
+
+  <!-- ===================== HOT DRINKS ===================== -->
+  <section class="panel active" id="hot">
+    <p class="panel-intro">كل اللي دافي وبيدفّي — قهوة، شاي، شوكولاتة وأعشاب</p>
+    <div class="category-grid">
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">☕</span>مشروبات القهوة</h3>
+        <div class="menu-row"><span class="item-name">اسبريسو</span><span class="leader"></span><span class="price">65</span></div>
+        <div class="menu-row"><span class="item-name">ميكاتو</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">ميكاتو كراميل</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">كورتادو</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">لاتيه</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">كابتشينو</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">موكا</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">أمريكانو</span><span class="leader"></span><span class="price">60</span></div>
+        <div class="menu-row"><span class="item-name">سبانش لاتيه</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">فلات وايت</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">هامر هيد</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">قهوة سريعة التحضير</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">ماتشا</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">V60 كولومبي</span><span class="leader"></span><span class="price">100</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🫖</span>قهوة عربي وشاي</h3>
+        <div class="menu-row"><span class="item-name">قهوة عربي</span><span class="leader"></span><span class="price">70</span></div>
+        <div class="menu-row"><span class="item-name">شاي كرك</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">شاي عدني</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">شاي مبخر</span><span class="leader"></span><span class="price">50</span></div>
+        <div class="menu-row"><span class="item-name">شاي فليفر</span><span class="leader"></span><span class="price">65</span></div>
+        <div class="note-box">هوت سيدر 50 ج · أعشاب 45 ج · فيتامين C 50 ج</div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🍫</span>هوت شوكليت</h3>
+        <div class="menu-row"><span class="item-name">هوت شوكلت كلاسيك</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">هوت شوكلت اضافات</span><span class="leader"></span><span class="price">90</span></div>
+        <div class="menu-row"><span class="item-name">هوت شوكلت Kan</span><span class="leader"></span><span class="price">100</span></div>
+        <div class="menu-row"><span class="item-name">هوت شوكلت مارشميلو</span><span class="leader"></span><span class="price">90</span></div>
+        <div class="menu-row"><span class="item-name">سحلب كلاسيك</span><span class="leader"></span><span class="price">60</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🫘</span>قهوة تركي وفرنساوي</h3>
+        <div class="menu-row"><span class="item-name">قهوة تركي</span><span class="leader"></span>
+          <span class="price-dual"><span>S 35</span><span>D 40</span></span></div>
+        <div class="menu-row"><span class="item-name">قهوة استرونج</span><span class="leader"></span>
+          <span class="price-dual"><span>S 40</span><span>D 60</span></span></div>
+        <div class="menu-row"><span class="item-name">قهوة محوج</span><span class="leader"></span>
+          <span class="price-dual"><span>S 35</span><span>D 50</span></span></div>
+        <div class="menu-row"><span class="item-name">قهوة فرنساوي</span><span class="leader"></span>
+          <span class="price-dual"><span>D 65</span></span></div>
+        <div class="menu-row"><span class="item-name">فرنساوي إضافات</span><span class="leader"></span>
+          <span class="price-dual"><span>D 70</span></span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== COLD DRINKS ===================== -->
+  <section class="panel" id="cold">
+    <p class="panel-intro">كل اللي بارد ومنعش — آيس كوفي، عصائر، موكتيل وسوفت درينك</p>
+    <div class="category-grid">
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🧊</span>آيس كوفي</h3>
+        <div class="menu-row"><span class="item-name">آيس لاتيه</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">آيس دالجونا</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">آيس موكا</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">آيس بستاشيو لاتيه</span><span class="leader"></span><span class="price">95</span></div>
+        <div class="menu-row"><span class="item-name">آيس كراميل ميكاتو</span><span class="leader"></span><span class="price">95</span></div>
+        <div class="menu-row"><span class="item-name">آيس سبانش</span><span class="leader"></span><span class="price">90</span></div>
+        <div class="menu-row"><span class="item-name">آيس ماتشا</span><span class="leader"></span><span class="price">85</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🥤</span>فرباتشينو</h3>
+        <div class="menu-row"><span class="item-name">فرباتشينو كلاسيك</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">فرباتشينو موكا</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">فرباتشينو كراميل</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">Kan فرباتشينو</span><span class="leader"></span><span class="price">90</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🍹</span>عصائر فريش</h3>
+        <div class="menu-row"><span class="item-name">مانجا</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">برتقال</span><span class="leader"></span><span class="price">65</span></div>
+        <div class="menu-row"><span class="item-name">فراولة</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">ليمون نعناع</span><span class="leader"></span><span class="price">60</span></div>
+        <div class="menu-row"><span class="item-name">موز</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">بطيخ</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">كيوي</span><span class="leader"></span><span class="price">85</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🍸</span>موكتيل</h3>
+        <div class="menu-row"><span class="item-name">بلو بنانا</span><span class="leader"></span><span class="price">90</span></div>
+        <div class="menu-row"><span class="item-name">جوافة بلو بيري</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">فلوريدا</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">تروبيكال</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">وايت جولد</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">بينا كولادا</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">مانجو بيري</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">مانجو كيوي</span><span class="leader"></span><span class="price">95</span></div>
+        <div class="menu-row"><span class="item-name">أفريكانو</span><span class="leader"></span><span class="price">90</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🥛</span>سوفت درينك</h3>
+        <div class="menu-row"><span class="item-name">موهيتو كلاسيك</span><span class="leader"></span><span class="price">65</span></div>
+        <div class="menu-row"><span class="item-name">موهيتو فليفر</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">شيري كولا</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">صن شاين</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">باشون لايت</span><span class="leader"></span><span class="price">85</span></div>
+        <div class="menu-row"><span class="item-name">أورانج مست</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">مياه غازية</span><span class="leader"></span><span class="price">35</span></div>
+        <div class="menu-row"><span class="item-name">ريد بول</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">مياه معدنية</span><span class="leader"></span><span class="price">12</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🥤</span>شيك</h3>
+        <div class="menu-row"><span class="item-name">شيك كلاسيك</span><span class="leader"></span><span class="price">65</span></div>
+        <div class="menu-row"><span class="item-name">شيك فليفر</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">شيك اسبيشيال</span><span class="leader"></span><span class="price">110</span></div>
+        <div class="note-box">شيك اسبيشيال: تشيز كيك - ريد فيلفت - جلاكسي - براونيز</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== DESSERT ===================== -->
+  <section class="panel" id="dessert">
+    <p class="panel-intro">تحلية على أصولها — كيك، وافل ومخبوزات كان</p>
+    <div class="category-grid">
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🍰</span>ديزرت</h3>
+        <div class="menu-row"><span class="item-name">تشيز كيك</span><span class="leader"></span><span class="price">70</span></div>
+        <div class="menu-row"><span class="item-name">سان سيباستيان</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">مولتن</span><span class="leader"></span><span class="price">95</span></div>
+        <div class="menu-row"><span class="item-name">ميني فادج</span><span class="leader"></span><span class="price">90</span></div>
+        <div class="menu-row"><span class="item-name">براونيز</span><span class="leader"></span><span class="price">75</span></div>
+        <div class="menu-row"><span class="item-name">سينابون</span><span class="leader"></span><span class="price">75</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🧇</span>وافل</h3>
+        <div class="menu-row"><span class="item-name">وافل كلاسيك</span><span class="leader"></span><span class="price">70</span></div>
+        <div class="menu-row"><span class="item-name">وافل فور سيزون</span><span class="leader"></span><span class="price">85</span></div>
+      </div>
+
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">🥐</span>مخبوزات</h3>
+        <div class="menu-row"><span class="item-name">ميكس تشيز</span><span class="leader"></span><span class="price">80</span></div>
+        <div class="menu-row"><span class="item-name">ميكس مدخن</span><span class="leader"></span><span class="price">100</span></div>
+        <div class="menu-row"><span class="item-name">ميكس بيف</span><span class="leader"></span><span class="price">115</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== EXTRAS ===================== -->
+  <section class="panel" id="extra">
+    <p class="panel-intro">زوّد مشروبك زي ما يعجبك</p>
+    <div class="category-grid">
+      <div class="category-card">
+        <h3 class="category-title"><span class="emoji">➕</span>إضافات</h3>
+        <div class="menu-row"><span class="item-name">صوص</span><span class="leader"></span><span class="price">20</span></div>
+        <div class="menu-row"><span class="item-name">توبينج</span><span class="leader"></span><span class="price">30</span></div>
+        <div class="menu-row"><span class="item-name">فليفر</span><span class="leader"></span><span class="price">30</span></div>
+        <div class="menu-row"><span class="item-name">ويب كريم</span><span class="leader"></span><span class="price">30</span></div>
+        <div class="menu-row"><span class="item-name">حليب</span><span class="leader"></span><span class="price">30</span></div>
+        <div class="menu-row"><span class="item-name">مكسرات</span><span class="leader"></span><span class="price">35</span></div>
+        <div class="menu-row"><span class="item-name">عسل</span><span class="leader"></span><span class="price">20</span></div>
+        <div class="menu-row"><span class="item-name">آيس كريم</span><span class="leader"></span><span class="price">15</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="star-divider" style="max-width:1100px;margin-inline:auto;">
+  <svg viewBox="0 0 24 24"><path d="M12 0l2.9 8.1L23 11l-8.1 2.9L12 22l-2.9-8.1L1 11l8.1-2.9z"/></svg>
+</div>
+
+<footer>
+  <div class="foot-brand">كان | Kan Café</div>
+  <p>جميع الأسعار بالجنيه المصري شاملة الضريبة</p>
+  <p>📍 دوران الاستاد، امام رف هدوم، دمنهور</p>
+  <a class="wa-btn" href="https://wa.me/201040144888" target="_blank" rel="noopener">
+    📱 احجز أو اطلب واتساب
+  </a>
+</footer>
+
+<div class="scallop-strip flip"></div>
+
+<script>
+  const buttons = document.querySelectorAll('#tabs button');
+  const panels = document.querySelectorAll('.panel');
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      buttons.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+
+</body>
+</html>
